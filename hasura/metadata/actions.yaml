@@ -1,0 +1,118 @@
+actions:
+- name: acceptEventInvitation
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/acceptEventInvitation'
+    forward_client_headers: true
+- name: acceptFriendRequest
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/acceptFriendRequest'
+    forward_client_headers: true
+- name: cancelEventInvitation
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/cancelEventInvitation'
+    forward_client_headers: true
+- name: createEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/createEvent'
+    forward_client_headers: true
+- name: createUser
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/createUser'
+    forward_client_headers: true
+- name: declineEventInvitation
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/declineEventInvitation'
+    forward_client_headers: true
+- name: deleteEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/deleteEvent'
+    forward_client_headers: true
+- name: endEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/endEvent'
+    forward_client_headers: true
+- name: inviteUserToEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/inviteUserToEvent'
+    forward_client_headers: true
+- name: joinEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/joinEvent'
+    forward_client_headers: true
+- name: leaveEvent
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/leaveEvent'
+    forward_client_headers: true
+- name: markNotificationAsRead
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/markNotificationAsRead'
+    forward_client_headers: true
+- name: putDeviceToken
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/putDeviceToken'
+    forward_client_headers: true
+- name: rejectFriendRequest
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/rejectFriendRequest'
+    forward_client_headers: true
+- name: removeDeviceToken
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/removeDeviceToken'
+    forward_client_headers: true
+- name: removeFriend
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/removeFriend'
+    forward_client_headers: true
+- name: sendFriendRequest
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/sendFriendRequest'
+    forward_client_headers: true
+- name: updateUser
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/updateUser'
+    forward_client_headers: true
+- name: voteForMvp
+  definition:
+    kind: synchronous
+    handler: '{{ACTION_BASE_URL}}/voteForMvp'
+    forward_client_headers: true
+custom_types:
+  enums:
+  - name: ActionStatus
+    values:
+    - description: null
+      is_deprecated: null
+      value: SUCCESS
+    - description: null
+      is_deprecated: null
+      value: ERROR
+    - description: null
+      is_deprecated: null
+      value: USERNAME_ALREADY_EXISTS
+  input_objects:
+  - name: CreateUserInput
+  - name: UpdateUserInput
+  - name: CreateEventInput
+  - name: SampleInput
+  objects:
+  - name: ActionResult
+  - name: SampleOutput
+  scalars: []

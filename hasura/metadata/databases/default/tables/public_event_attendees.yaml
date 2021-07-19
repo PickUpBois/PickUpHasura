@@ -1,0 +1,21 @@
+table:
+  name: event_attendees
+  schema: public
+configuration:
+  custom_column_names:
+    attendee_id: id
+    event_id: eventId
+    invited_at: invitedAt
+    joined_at: joinedAt
+    vote_count: voteCount
+  custom_root_fields: {}
+object_relationships:
+- name: team
+  using:
+    foreign_key_constraint_on: team_id
+- name: user
+  using:
+    foreign_key_constraint_on: attendee_id
+- name: userByInvitedBy
+  using:
+    foreign_key_constraint_on: invited_by

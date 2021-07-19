@@ -1,0 +1,33 @@
+table:
+  name: users
+  schema: public
+configuration:
+  custom_column_names:
+    first_name: firstName
+    goat_score: goatScore
+    last_name: lastName
+    photourl: photoUrl
+    user_id: id
+  custom_root_fields:
+    select_by_pk: user
+array_relationships:
+- name: domainEvents
+  using:
+    foreign_key_constraint_on:
+      column: user_id
+      table:
+        name: domain_events
+        schema: public
+computed_fields:
+- comment: Gets the friends of a user
+  definition:
+    function:
+      name: get_friends
+      schema: public
+  name: friends
+- comment: notifications for user
+  definition:
+    function:
+      name: get_notifications
+      schema: public
+  name: notifications

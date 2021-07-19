@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  express:
+    container_name: express
+    build: ./express-server
+    volumes:
+      - ./express-server:/app
+    ports:
+      - 3000:3000
+    command: ["npm", "run", "dev"]
+    networks:
+      - webnet
+  postgres:
+    container_name: postgres
+    image: postgis/postgis:12-master
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${DATABASE}
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  hasura:
+    image: hasura/graphql-engine:v2.0.1
+    container_name: hasura
+    ports:
+    - 5000:5000
+    depends_on:
+    - postgres
+    restart: always
+    links: 
+      - express
+      - postgres
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://${PG_USER}:${PASSWORD}@postgres:5432/${DATABASE}
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
+      ACTION_BASE_URL: http://express:3000/actions
+      HASURA_GRAPHQL_SERVER_PORT: 5000
+      ## uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+    networks:
+      - webnet
+networks:
+  webnet:
+volumes:
+  pgdata:

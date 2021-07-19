@@ -1,0 +1,161 @@
+type Mutation {
+  acceptEventInvitation (
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  acceptFriendRequest (
+    friendId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  cancelEventInvitation (
+    userId: String!
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  createEvent (
+    arg1: CreateEventInput!
+  ): ActionResult!
+}
+
+type Mutation {
+  createUser (
+    arg1: CreateUserInput!
+  ): ActionResult!
+}
+
+type Mutation {
+  declineEventInvitation (
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  deleteEvent (
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  endEvent (
+    eventId: Int
+  ): ActionResult!
+}
+
+type Mutation {
+  inviteUserToEvent (
+    userId: String!
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  joinEvent (
+    eventId: String!
+  ): ActionResult
+}
+
+type Mutation {
+  leaveEvent (
+    eventId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  markNotificationAsRead (
+    notificationId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  putDeviceToken (
+    token: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  rejectFriendRequest (
+    friendId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  removeDeviceToken (
+    token: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  removeFriend (
+    friendId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  sendFriendRequest (
+    friendId: String!
+  ): ActionResult!
+}
+
+type Mutation {
+  updateUser (
+    arg1: UpdateUserInput!
+  ): ActionResult!
+}
+
+type Mutation {
+  voteForMvp (
+    eventId: String!
+    userId: String!
+  ): ActionResult!
+}
+
+enum ActionStatus {
+  SUCCESS
+  ERROR
+  USERNAME_ALREADY_EXISTS
+}
+
+input CreateUserInput {
+  firstName : String!
+  lastName : String!
+  username : String!
+  college : String
+}
+
+input UpdateUserInput {
+  firstName : String
+  lastName : String
+  username : String
+  photoUrl : String
+  college : String
+}
+
+input CreateEventInput {
+  name : String!
+  info : String!
+  startDate : timestamptz!
+  capacity : Int!
+  type : String!
+  status : String!
+}
+
+input SampleInput {
+  username : String!
+  password : String!
+}
+
+type ActionResult {
+  status : ActionStatus!
+  reason : String
+}
+
+type SampleOutput {
+  accessToken : String!
+}
+

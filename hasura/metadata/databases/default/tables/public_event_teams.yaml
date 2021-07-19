@@ -1,0 +1,16 @@
+table:
+  name: event_teams
+  schema: public
+configuration:
+  custom_column_names:
+    set_scores: scores
+    team_id: id
+  custom_root_fields: {}
+array_relationships:
+- name: members
+  using:
+    foreign_key_constraint_on:
+      column: team_id
+      table:
+        name: event_attendees
+        schema: public

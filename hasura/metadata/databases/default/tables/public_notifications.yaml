@@ -1,0 +1,14 @@
+table:
+  name: notifications
+  schema: public
+configuration:
+  custom_column_names:
+    created_at: createdAt
+  custom_root_fields: {}
+object_relationships:
+- name: actor
+  using:
+    foreign_key_constraint_on: actor_id
+- name: event
+  using:
+    foreign_key_constraint_on: event_id
