@@ -52,12 +52,14 @@ async function updateUserHandler(userId: string, args: updateUserArgs): Promise<
       await client.request(updateUserMutation, variables)
       return {
         status: ActionStatus.SUCCESS,
-        reason: null
+        reason: null,
+        id: null
       }
     } catch(error) {
       return {
         status: ActionStatus.ERROR,
-        reason: error
+        reason: error,
+        id: null
       }
     }
   }
@@ -65,7 +67,7 @@ async function updateUserHandler(userId: string, args: updateUserArgs): Promise<
 export const updateUserController =  async (req: Request, res: Response) => {
     // get request input
   const params: updateUserArgs = req.body.input
-  const userId = req.header('X-Hasura-User-Id')
+  const userId: string = req.body.session_variables['x-hasura-user-id']
   // run some business logic
   const result = await updateUserHandler(userId, params)
 

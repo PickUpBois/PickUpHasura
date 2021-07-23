@@ -1,6 +1,6 @@
 type Mutation {
   acceptEventInvitation (
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
@@ -13,7 +13,7 @@ type Mutation {
 type Mutation {
   cancelEventInvitation (
     userId: String!
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
@@ -31,44 +31,49 @@ type Mutation {
 
 type Mutation {
   declineEventInvitation (
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
 type Mutation {
   deleteEvent (
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
 type Mutation {
   endEvent (
-    eventId: Int
+    eventId: Int!
+    team1_members: [String!]!
+    team2_members: [String!]!
+    team1_scores: [Int!]!
+    team2_scores: [Int!]!
+    team1_win: Boolean!
   ): ActionResult!
 }
 
 type Mutation {
   inviteUserToEvent (
     userId: String!
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
 type Mutation {
   joinEvent (
-    eventId: String!
+    eventId: Int!
   ): ActionResult
 }
 
 type Mutation {
   leaveEvent (
-    eventId: String!
+    eventId: Int!
   ): ActionResult!
 }
 
 type Mutation {
   markNotificationAsRead (
-    notificationId: String!
+    notificationId: Int!
   ): ActionResult!
 }
 
@@ -110,7 +115,7 @@ type Mutation {
 
 type Mutation {
   voteForMvp (
-    eventId: String!
+    eventId: Int!
     userId: String!
   ): ActionResult!
 }
@@ -153,6 +158,7 @@ input SampleInput {
 type ActionResult {
   status : ActionStatus!
   reason : String
+  id : String
 }
 
 type SampleOutput {

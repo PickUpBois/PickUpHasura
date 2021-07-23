@@ -1,1 +1,0 @@
-CREATE TABLE "public"."domain_events" ("id" bigserial NOT NULL, "created_at" timestamptz NOT NULL DEFAULT now(), "payload" jsonb, PRIMARY KEY ("id") );COMMENT ON TABLE "public"."domain_events" IS E'stores server side events';

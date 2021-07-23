@@ -1,1 +1,0 @@
-DROP FUNCTION get_notifications(users);

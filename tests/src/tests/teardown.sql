@@ -1,0 +1,1 @@
+TRUNCATE TABLE domain_events, users, events, info_notifications, event_teams, event_attendees, relationships CASCADE;

@@ -17,10 +17,16 @@ const friendStatusQuery = gql`
 
 const friendRequestQuery = gql`
     query GetFriendRequest($senderId: String!, $sendeeId: String!) {
-        relationships_by_pk(friend_id: $sendeeId, user_id: $senderId) {
+        r1: relationships_by_pk(friend_id: $sendeeId, user_id: $senderId) {
             relationship_id,
             status
-        },
+        }
+
+        r2: relationships_by_pk(friend_id: $senderId, user_id: $sendeeId) {
+            relationship_id,
+            status
+        }
+
     }
 `
 
@@ -39,7 +45,8 @@ export async function checkIsFriend(userId1: string, userId2: string): Promise<b
 export async function checkFriendRequestExists(senderId: string, sendeeId: string): Promise<boolean> {
     try {
         const data = await client.request(friendRequestQuery, { senderId, sendeeId })
-        return data.relationships_by_pk.status == FriendStatus.friend
+        if (!data.r1) return false
+        return data.r1.status == FriendStatus.friend && (!data.r2)
     } catch(e) {
         console.log(e)
         return null

@@ -21,25 +21,30 @@ export async function acceptEventInvitationHandler(userId: string, eventId: stri
         if (attendee.status != EventAttendeeStatus.invited) {
             return {
                 status: ActionStatus.ERROR,
-                reason: 'event invitation already exists'
+                reason: 'event invitation already exists',
+                id: null,
             }
         }
         // accept event invitation
-        await client.request(acceptEventInvitationMutation, { userId, eventId })
+        await client.request(acceptEventInvitationMutation, { userId, eventId: parseInt(eventId) })
         return {
             status: ActionStatus.SUCCESS,
-            reason: null
+            reason: null,
+            id: null
         }
     } catch(e) {
         console.log(e)
         return {
             status: ActionStatus.ERROR,
-            reason: e
+            reason: e,
+            id: null
         }
     }
 }
 
 export const acceptEventInvitationController = async (req: Request, res: Response) => {
     const params: acceptEventInvitationArgs = req.body.input;
-    const userId: string = req.header('X-Hasura-User-Id');
+    const userId: string = req.body.session_variables['x-hasura-user-id']
+    const result = await acceptEventInvitationHandler(userId, params.eventId)
+    return res.json(result)
 }

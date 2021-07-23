@@ -17,7 +17,7 @@ const createUserMutation = gql`
       insert_users_one(object: {id: $id, firstName: $firstName, lastName: $lastName, username: $username, college: $college}) {
         id
       }
-      insert_domain_events_one(object: {payload: $payload, type: USER_CREATED}) {
+      insert_domain_events_one(object: {user_id: $id, payload: $payload, type: USER_CREATED}) {
         id
       }
   }
@@ -27,20 +27,23 @@ async function createUserHandler(userId: string, args: createUserArgs): Promise<
   const createUserInput: CreateUserInput = args.arg1;
   const variables = {
     ... createUserInput,
+    id: userId,
     payload: {
       userId
     }
   }
   try {
-    await client.request(createUserMutation, variables);
+    const resp = await client.request(createUserMutation, variables);
     return {
       status: ActionStatus.SUCCESS,
-      reason: null
+      reason: null,
+      id: resp['insert_users_one']['id']
     }
   } catch (error) {
     return {
       status: ActionStatus.ERROR,
-      reason: error
+      reason: error,
+      id: null
     }
   }
 }
@@ -49,10 +52,9 @@ async function createUserHandler(userId: string, args: createUserArgs): Promise<
 export const createUserController = async (req: Request, res: Response) => {
   // get request input
   const params: createUserArgs = req.body.input
-  const userId: string = req.header('X-Hasura-User-Id')
+  const userId: string = req.body.session_variables['x-hasura-user-id']
   // run some business logic
   const result = await createUserHandler(userId, params)
-
   // success
   return res.json(result)
 }

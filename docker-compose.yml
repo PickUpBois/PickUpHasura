@@ -8,6 +8,9 @@ services:
       - ./express-server:/app
     ports:
       - 3000:3000
+    environment:
+      PORT: 3000
+      HASURA_GRAPHQL_URL: http://hasura:5000/v1/graphql
     command: ["npm", "run", "dev"]
     networks:
       - webnet

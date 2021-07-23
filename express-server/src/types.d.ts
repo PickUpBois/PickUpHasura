@@ -34,6 +34,7 @@ type SampleInput = {
 }
 
 type ActionResult = {
+  id: Maybe<string>
   status: ActionStatus
   reason?: Maybe<string>
 }
@@ -94,7 +95,12 @@ type deleteEventArgs = {
 }
 
 type endEventArgs = {
-  eventId?: Maybe<number>
+  eventId: string,
+  team1_members: string[],
+  team2_members: string[],
+  team1_scores: number[],
+  team2_scores: number[],
+  team1_win: boolean
 }
 
 type inviteUserToEventArgs = {
@@ -111,7 +117,7 @@ type leaveEventArgs = {
 }
 
 type markNotificationAsReadArgs = {
-  notificationId: string
+  notificationId: number
 }
 
 type putDeviceTokenArgs = {

@@ -26,5 +26,5 @@ const markNotificationAsReadMutation = gql`
 `
 
 export const markNotificationAsReadController = async (req: Request, res: Response) => {
-    const userId: string = req.header('X-Hasura-User-Id')
+    const userId: string = req.body.session_variables['x-hasura-user-id']
 }

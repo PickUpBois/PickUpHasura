@@ -3,29 +3,32 @@ import { gql } from "graphql-request";
 import { ActionStatus, EventAttendeeStatus } from "../enums";
 import { client } from "../gql_client";
 import { getEventAttendee } from "../models/event";
-import { cancelEventInvitationArgs } from "../types";
+import { ActionResult, cancelEventInvitationArgs } from "../types";
 
-export async function cancelEventInvitationHandler(userId: string, eventId: string) {
+export async function cancelEventInvitationHandler(ownerId: string, userId: string, eventId: string): Promise<ActionResult> {
     try {
         // check if event invitation exists
         const attendee = await getEventAttendee(eventId, userId)
         if (!attendee || attendee.status != EventAttendeeStatus.invited) {
             return {
                 status: ActionStatus.ERROR,
-                reason: 'invitation does not exist'
+                reason: 'invitation does not exist',
+                id: null,
             }
         }
         // cancel event invitation
-        await client.request(removeEventInvitationMutation, { eventId, userId })
+        await client.request(removeEventInvitationMutation, { eventId: parseInt(eventId), userId })
         return {
             status: ActionStatus.SUCCESS,
-            reason: null
+            reason: null,
+            id: null,
         }
     } catch(e) {
         console.log(e)
         return {
             status: ActionStatus.ERROR,
-            reason: e
+            reason: e,
+            id: null
         }
     }
 }
@@ -40,5 +43,7 @@ const removeEventInvitationMutation = gql`
 
 export const cancelEventInvitationController = async (req: Request, res: Response) => {
     const params: cancelEventInvitationArgs = req.body.input;
-    const userId: string = req.header('X-Hasura-User-Id')
+    const userId: string = req.body.session_variables['x-hasura-user-id']
+    const result = await cancelEventInvitationHandler(userId, params.userId, params.eventId)
+    return res.json(result)
 }

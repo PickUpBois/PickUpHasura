@@ -1,39 +1,69 @@
 import { Router } from "express";
+import { acceptEventInvitationController } from "./actions/acceptEventInvitation";
+import { acceptFriendRequestController } from "./actions/acceptFriendRequest";
+import { cancelEventInvitationController } from "./actions/cancelEventInvitation";
+import { createEventController } from "./actions/createEvent";
 import { createUserController } from "./actions/createUser";
+import { declineEventInvitationController, declineEventInvitationHandler } from "./actions/declineEventInvitation";
+import { deleteEventController } from "./actions/deleteEvent";
+import { endEventController } from "./actions/endEvent";
+import { inviteUserToEventController } from "./actions/inviteUserToEvent";
+import { joinEventController } from "./actions/joinEvent";
+import { leaveEventController } from "./actions/leaveEvent";
+import { rejectFriendRequestController } from "./actions/rejectFriendRequest";
+import { removeFriendController } from "./actions/removeFriend";
+import { sendFriendRequestController } from "./actions/sendFriendRequest";
+import { updateUserController } from "./actions/updateUser";
 
 const router = Router();
 
+// tested
 router.post('/createUser', createUserController)
 
-router.post('/updateUser')
+// tested
+router.post('/updateUser', updateUserController)
 
-router.post('sendFriendRequest')
+// tested
+router.post('/sendFriendRequest', sendFriendRequestController)
 
-router.post('/acceptFriendRequest')
+// tested
+router.post('/acceptFriendRequest', acceptFriendRequestController)
 
-router.post('/rejectFriendRequest')
+// tested
+router.post('/rejectFriendRequest', rejectFriendRequestController)
 
-router.post('/removeFriend')
+// tested
+router.post('/removeFriend', removeFriendController)
 
-router.post('putDeviceToken')
+router.post('/putDeviceToken')
 
 router.post('/markNotificationAsRead')
 
-router.post('/createEvent')
+// tested
+router.post('/createEvent', createEventController)
 
-router.post('/deleteEvent')
+// tested
+router.post('/deleteEvent', deleteEventController)
 
-router.post('/joinEvent')
+// tested
+router.post('/joinEvent', joinEventController)
 
-router.post('/endEvent')
+// tested
+router.post('/leaveEvent', leaveEventController)
 
-router.post('/inviteUserToEvent')
+router.post('/endEvent', endEventController)
 
-router.post('/cancelEventInvitation')
+// tested
+router.post('/inviteUserToEvent', inviteUserToEventController)
 
-router.post('/acceptEventInvitation')
+// tested
+router.post('/cancelEventInvitation', cancelEventInvitationController)
 
-router.post('/declineEventInvitation')
+// tested
+router.post('/acceptEventInvitation', acceptEventInvitationController)
+
+// tested
+router.post('/declineEventInvitation', declineEventInvitationController)
 
 router.post('/uploadEventFiles')
 

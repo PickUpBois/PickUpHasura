@@ -23,10 +23,10 @@ const getEventQuery = gql`
 
 const getEventAttendeeQuery = gql`
     query GetEventAttendee($eventId: Int!, $userId: String!) {
-        event_attendees(where: {id: {_eq: $userId}, eventId: {_eq: $eventId}}) {
+        event_attendees_by_pk(eventId: $eventId, id: $userId) {
             id,
             eventId,
-            status,
+            status
         }
     }
 `
@@ -45,7 +45,8 @@ export async function getEvent(eventId: string): Promise<EventInfo> {
 export async function getEventAttendee(eventId: string, userId: string): Promise<EventAttendee | null> {
     try {
         const data = await client.request(getEventAttendeeQuery, { eventId: parseInt(eventId), userId })
-        const attendee = data.events_by_pk
+        const attendee = data.event_attendees_by_pk
+        if (!attendee) return null
         const status: string = attendee.status
         return {
             userId: attendee.id,
