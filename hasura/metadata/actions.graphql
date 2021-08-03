@@ -43,12 +43,7 @@ type Mutation {
 
 type Mutation {
   endEvent (
-    eventId: Int!
-    team1_members: [String!]!
-    team2_members: [String!]!
-    team1_scores: [Int!]!
-    team2_scores: [Int!]!
-    team1_win: Boolean!
+    input: EndEventInput!
   ): ActionResult!
 }
 
@@ -153,6 +148,15 @@ input CreateEventInput {
 input SampleInput {
   username : String!
   password : String!
+}
+
+input EndEventInput {
+  eventId : Int!
+  team1_members : [String!]!
+  team2_members : [String!]!
+  team1_scores : [Int!]!
+  team2_scores : [Int!]!
+  team1_win : Boolean!
 }
 
 type ActionResult {

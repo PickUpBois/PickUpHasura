@@ -1,0 +1,9 @@
+type Query {
+    getEventTeam(teamId: Int!): EventTeam!
+}
+
+type EventTeam {
+    id: Int!
+    eventId: Int!
+    scores: [Int!]!
+}

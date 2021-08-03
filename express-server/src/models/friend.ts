@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { FriendStatus } from "../enums";
-import { client } from "../gql_client";
+import client from "../gql_client";
 
 const friendStatusQuery = gql`
     query CheckFriend($userId1: String!, $userId2: String!) {
@@ -32,7 +32,7 @@ const friendRequestQuery = gql`
 
 export async function checkIsFriend(userId1: string, userId2: string): Promise<boolean> {
     try {
-        const data = await client.request(friendStatusQuery, { userId1, userId2 })
+        const data = await client().request(friendStatusQuery, { userId1, userId2 })
         const relationship1 = data.relationship1
         const relationship2 = data.relationship2
         return relationship1.status == FriendStatus.friend && relationship2.status == FriendStatus.friend
@@ -44,7 +44,7 @@ export async function checkIsFriend(userId1: string, userId2: string): Promise<b
 
 export async function checkFriendRequestExists(senderId: string, sendeeId: string): Promise<boolean> {
     try {
-        const data = await client.request(friendRequestQuery, { senderId, sendeeId })
+        const data = await client().request(friendRequestQuery, { senderId, sendeeId })
         if (!data.r1) return false
         return data.r1.status == FriendStatus.friend && (!data.r2)
     } catch(e) {

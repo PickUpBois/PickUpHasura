@@ -126,6 +126,16 @@ mutation RemoveDeviceToken($token: String!) {
 }
 """
 
+putDeviceTokenMutation = """
+mutation PutDeviceToken($token: String!) {
+  putDeviceToken(token: $token) {
+    status,
+    reason,
+    id
+  }
+}
+"""
+
 removeFriendMutation = """
 mutation RemoveFriend($userId: String!) {
   removeFriend(friendId: $userId) {

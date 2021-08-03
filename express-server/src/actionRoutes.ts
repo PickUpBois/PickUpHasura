@@ -1,19 +1,21 @@
 import { Router } from "express";
-import { acceptEventInvitationController } from "./actions/acceptEventInvitation";
-import { acceptFriendRequestController } from "./actions/acceptFriendRequest";
-import { cancelEventInvitationController } from "./actions/cancelEventInvitation";
-import { createEventController } from "./actions/createEvent";
-import { createUserController } from "./actions/createUser";
-import { declineEventInvitationController, declineEventInvitationHandler } from "./actions/declineEventInvitation";
-import { deleteEventController } from "./actions/deleteEvent";
-import { endEventController } from "./actions/endEvent";
-import { inviteUserToEventController } from "./actions/inviteUserToEvent";
-import { joinEventController } from "./actions/joinEvent";
-import { leaveEventController } from "./actions/leaveEvent";
-import { rejectFriendRequestController } from "./actions/rejectFriendRequest";
-import { removeFriendController } from "./actions/removeFriend";
-import { sendFriendRequestController } from "./actions/sendFriendRequest";
-import { updateUserController } from "./actions/updateUser";
+import { acceptEventInvitationController } from "./actions/acceptEventInvitation/acceptEventInvitation";
+import { acceptFriendRequestController } from "./actions/acceptFriendRequest/acceptFriendRequest";
+import { cancelEventInvitationController } from "./actions/cancelEventInvitation/cancelEventInvitation";
+import { createEventController } from "./actions/createEvent/createEvent";
+import { createUserController } from "./actions/createUser/createUser";
+import { declineEventInvitationController, declineEventInvitationHandler } from "./actions/declineEventInvitation/declineEventInvitation";
+import { deleteEventController } from "./actions/deleteEvent/deleteEvent";
+import { endEventController } from "./actions/endEvent/endEvent";
+import { inviteUserToEventController } from "./actions/inviteUserToEvent/inviteUserToEvent";
+import { joinEventController } from "./actions/joinEvent/joinEvent";
+import { leaveEventController } from "./actions/leaveEvent/leaveEvent";
+import { markNotificationAsReadController } from "./actions/markNotificationAsRead/markNotificationAsRead";
+import { rejectFriendRequestController } from "./actions/rejectFriendRequest/rejectFriendRequest";
+import { removeFriendController } from "./actions/removeFriend/removeFriend";
+import { sendFriendRequestController } from "./actions/sendFriendRequest/sendFriendRequest";
+import { updateUserController } from "./actions/updateUser/updateUser";
+import { voteForMvpController } from "./actions/voteForMvp/voteForMvp";
 
 const router = Router();
 
@@ -37,7 +39,7 @@ router.post('/removeFriend', removeFriendController)
 
 router.post('/putDeviceToken')
 
-router.post('/markNotificationAsRead')
+router.post('/markNotificationAsRead', markNotificationAsReadController)
 
 // tested
 router.post('/createEvent', createEventController)
@@ -67,6 +69,6 @@ router.post('/declineEventInvitation', declineEventInvitationController)
 
 router.post('/uploadEventFiles')
 
-router.post('/voteForMvp')
+router.post('/voteForMvp', voteForMvpController)
 
 export default router;

@@ -10,7 +10,8 @@ INSERT INTO domain_event_type(value, description) VALUES
     ('EVENT_STARTED', 'event has started'),
     ('EVENT_DELETED', 'event was deleted'),
     ('EVENT_FINISHED', 'event was finished'),
-    ('EVENT_CREATED', 'event was created');
+    ('EVENT_CREATED', 'event was created'),
+    ('USER_VOTED_FOR_MVP', 'user has voted for an mvp');
 
 INSERT INTO notification_status(value, description) VALUES
     ('read', 'notification was read'),
@@ -40,7 +41,8 @@ INSERT INTO notification_type(value, description) VALUES
     ('voteForMvp', 'you must vote for mvp'),
     ('selectedMvp', 'you have been selected mvp'),
     ('leftEvent', 'user has left your event'),
-    ('joinedEvent', 'user has joined your event');
+    ('joinedEvent', 'user has joined your event'),
+    ('deletedEvent', 'owner has deleted the event');
 
 INSERT INTO friend_status(value, description) VALUES
     ('friend', 'user is a friend');

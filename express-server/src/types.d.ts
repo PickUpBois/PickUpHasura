@@ -28,6 +28,15 @@ type CreateEventInput = {
   status: string
 }
 
+type EndEventInput = {
+  eventId: string
+  team1_members: Array<string>
+  team2_members: Array<string>
+  team1_scores: Array<number>
+  team2_scores: Array<number>
+  team1_win: boolean
+}
+
 type SampleInput = {
   username: string
   password: string
@@ -95,12 +104,7 @@ type deleteEventArgs = {
 }
 
 type endEventArgs = {
-  eventId: string,
-  team1_members: string[],
-  team2_members: string[],
-  team1_scores: number[],
-  team2_scores: number[],
-  team1_win: boolean
+  input: EndEventInput
 }
 
 type inviteUserToEventArgs = {
@@ -117,7 +121,7 @@ type leaveEventArgs = {
 }
 
 type markNotificationAsReadArgs = {
-  notificationId: number
+  notificationId: string
 }
 
 type putDeviceTokenArgs = {

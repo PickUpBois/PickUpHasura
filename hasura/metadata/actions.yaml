@@ -112,6 +112,7 @@ custom_types:
   - name: UpdateUserInput
   - name: CreateEventInput
   - name: SampleInput
+  - name: EndEventInput
   objects:
   - name: ActionResult
   - name: SampleOutput

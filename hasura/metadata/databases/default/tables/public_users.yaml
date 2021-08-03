@@ -19,15 +19,14 @@ array_relationships:
         name: domain_events
         schema: public
 computed_fields:
-- comment: Gets the friends of a user
-  definition:
+- definition:
+    function:
+      name: friend_status
+      schema: public
+    session_argument: hasura_session
+  name: friendStatus
+- definition:
     function:
       name: get_friends
       schema: public
   name: friends
-- comment: notifications for user
-  definition:
-    function:
-      name: get_notifications
-      schema: public
-  name: notifications

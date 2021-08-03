@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { client } from "../gql_client";
+import client from "../gql_client";
 import { UserInfo } from "./userTypes";
 
 const getUserQuery = gql`
@@ -17,7 +17,7 @@ const getUserQuery = gql`
 
 export async function getUser(userId: string): Promise<UserInfo | null> {
     try {
-        const userData = await client.request(getUserQuery, { userId })
+        const userData = await client().request(getUserQuery, { userId })
         const user: UserInfo = userData.user
         return user
     } catch(error) {

@@ -3,6 +3,7 @@ table:
   schema: public
 configuration:
   custom_column_names:
+    event_id: eventId
     set_scores: scores
     team_id: id
   custom_root_fields: {}
@@ -14,3 +15,13 @@ array_relationships:
       table:
         name: event_attendees
         schema: public
+remote_relationships:
+- definition:
+    hasura_fields:
+    - team_id
+    remote_field:
+      getEventTeam:
+        arguments:
+          teamId: $team_id
+    remote_schema: main
+  name: info

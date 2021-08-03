@@ -1,0 +1,22 @@
+table:
+  name: friends
+  schema: public
+object_relationships:
+- name: friend
+  using:
+    manual_configuration:
+      column_mapping:
+        friend_id: user_id
+      insertion_order: null
+      remote_table:
+        name: users
+        schema: public
+- name: user
+  using:
+    manual_configuration:
+      column_mapping:
+        user_id: user_id
+      insertion_order: null
+      remote_table:
+        name: users
+        schema: public

@@ -4,7 +4,8 @@ import { ActionStatus } from "../enums";
 import { client } from "../gql_client";
 import { ActionResult } from "../types";
 
-async function startEventHandler(eventId: string): Promise<ActionResult> {
+export async function startEventHandler(eventId: string): Promise<ActionResult> {
+    console.log(`starting event ${eventId}`)
     try {
         const variables = {
             eventId: parseInt(eventId),

@@ -1,1 +1,2 @@
 - "!include public_end_event.yaml"
+- "!include public_search_users.yaml"

@@ -6,14 +6,27 @@ services:
     build: ./express-server
     volumes:
       - ./express-server:/app
+      - ./scripts/:/scripts
     ports:
       - 3000:3000
     environment:
       PORT: 3000
       HASURA_GRAPHQL_URL: http://hasura:5000/v1/graphql
-    command: ["npm", "run", "dev"]
+    entrypoint: ["npm", "run", "dev"]
     networks:
       - webnet
+  firebase:
+    container_name: firebase
+    build: ./firebase
+    volumes:
+      - ./firebase:/app
+      - ./firebase/data:/app/data
+    networks:
+      - webnet
+    ports:
+      - 9099:9099
+      - 9199:9199
+      - 4000-4005:4000-4005
   postgres:
     container_name: postgres
     image: postgis/postgis:12-master
@@ -27,9 +40,9 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./tests/db_init_scripts:/docker-entrypoint-initdb.d
   hasura:
-    image: hasura/graphql-engine:v2.0.1
+    image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
     container_name: hasura
     ports:
     - 5000:5000
@@ -39,6 +52,8 @@ services:
     links: 
       - express
       - postgres
+    entrypoint: ["/scripts/wait-for-it.sh", "postgres:5432", "--", "docker-entrypoint.sh"]
+    command: ["graphql-engine", "serve"]
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://${PG_USER}:${PASSWORD}@postgres:5432/${DATABASE}
       ## enable the console served by server
@@ -49,11 +64,15 @@ services:
       HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: "true"
       ACTION_BASE_URL: http://express:3000/actions
       HASURA_GRAPHQL_SERVER_PORT: 5000
+      EVENT_BASE_URL: http://express:3000/events
+      REMOTE_SCHEMA_URL: http://express:3000/graphql
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+    volumes:
+      - ./hasura/metadata:/hasura-metadata
+      - ./hasura/migrations:/hasura-migrations
+      - ./scripts/:/scripts
     networks:
       - webnet
 networks:
   webnet:
-volumes:
-  pgdata:

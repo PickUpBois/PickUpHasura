@@ -3,7 +3,10 @@ table:
   schema: public
 configuration:
   custom_column_names:
+    actor_id: actorId
     created_at: createdAt
+    event_id: eventId
+    user_id: userId
   custom_root_fields: {}
 object_relationships:
 - name: actor

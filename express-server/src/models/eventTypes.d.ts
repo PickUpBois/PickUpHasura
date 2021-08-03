@@ -17,5 +17,13 @@ export type EventInfo = {
 export type EventAttendee = {
     userId: string,
     eventId: string,
+    voteCount: number,
+    voted: boolean,
     status: EventAttendeeStatus
+}
+
+export type EventTeam = {
+    id: string
+    eventId: string
+    scores: number[]
 }
