@@ -11,7 +11,9 @@ import { inviteUserToEventController } from "./actions/inviteUserToEvent/inviteU
 import { joinEventController } from "./actions/joinEvent/joinEvent";
 import { leaveEventController } from "./actions/leaveEvent/leaveEvent";
 import { markNotificationAsReadController } from "./actions/markNotificationAsRead/markNotificationAsRead";
+import { putDeviceTokenController } from "./actions/putDeviceToken/putDeviceToken";
 import { rejectFriendRequestController } from "./actions/rejectFriendRequest/rejectFriendRequest";
+import { removeDeviceTokenController } from "./actions/removeDeviceToken/removeDeviceToken";
 import { removeFriendController } from "./actions/removeFriend/removeFriend";
 import { sendFriendRequestController } from "./actions/sendFriendRequest/sendFriendRequest";
 import { updateUserController } from "./actions/updateUser/updateUser";
@@ -37,7 +39,9 @@ router.post('/rejectFriendRequest', rejectFriendRequestController)
 // tested
 router.post('/removeFriend', removeFriendController)
 
-router.post('/putDeviceToken')
+router.post('/putDeviceToken', putDeviceTokenController)
+
+router.post('/removeDeviceToken', removeDeviceTokenController)
 
 router.post('/markNotificationAsRead', markNotificationAsReadController)
 

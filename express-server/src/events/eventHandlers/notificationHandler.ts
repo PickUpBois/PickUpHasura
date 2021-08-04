@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { NotificationType } from "../../enums";
 import { client } from "../../gql_client";
 import { getAttendees, getEventOwnerId } from "../../models/event";
+import { EventDeletedPayload, EventStartedPayload, UserAcceptFriendRequestPayload, UserInvitedToEventPayload, UserJoinedEventPayload, UserLeftEventPayload, UserRejectFriendRequestPayload, UserSelectedMvpPayload, UserSentFriendRequestPayload, VoteForMvpPayload } from "../../types";
 
 const addNotificationMutation = gql`
     mutation AddNotification($userId: String!, $type: notification_type_enum!, $actorId: String, $eventId: Int) {

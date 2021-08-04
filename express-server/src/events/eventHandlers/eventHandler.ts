@@ -1,6 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools';
 import {scheduledJobs, scheduleJob} from 'node-schedule';
 import { getAttendees, getEvent, getOpenEvents, setEventMvp } from '../../models/event';
+import { EventCreatedPayload, EventDeletedPayload, VoteForMvpPayload } from '../../types';
 import { startEventHandler } from '../startEvent';
 
 export async function eventCreatedHandler(payload: EventCreatedPayload) {

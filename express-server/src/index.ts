@@ -9,6 +9,7 @@ import { fetchEventTeam } from "./models/event";
 import fs from 'fs'
 import path from "path";
 import { makeExecutableSchema } from "graphql-tools";
+import { initAdmin } from "./admin";
 
 const schemaFile = path.join(__dirname, "schema.graphql");
 const typeDefs = fs.readFileSync(schemaFile, 'utf8')
@@ -17,6 +18,8 @@ const app = express();
  // default port to listen
 
 initConfig()
+
+initAdmin()
 
 app.use(express.json());
 app.use('/actions', actionsRouter)

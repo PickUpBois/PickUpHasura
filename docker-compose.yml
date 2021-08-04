@@ -42,7 +42,7 @@ services:
     volumes:
       - ./tests/db_init_scripts:/docker-entrypoint-initdb.d
   hasura:
-    image: hasura/graphql-engine:v2.0.1.cli-migrations-v3
+    image: hasura/graphql-engine:v2.0.4.cli-migrations-v3
     container_name: hasura
     ports:
     - 5000:5000
@@ -55,6 +55,7 @@ services:
     entrypoint: ["/scripts/wait-for-it.sh", "postgres:5432", "--", "docker-entrypoint.sh"]
     command: ["graphql-engine", "serve"]
     environment:
+      DATABASE_URL: postgres://${PG_USER}:${PASSWORD}@postgres:5432/${DATABASE}
       HASURA_GRAPHQL_DATABASE_URL: postgres://${PG_USER}:${PASSWORD}@postgres:5432/${DATABASE}
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console

@@ -1,5 +1,0 @@
--- Could not auto-generate a down migration.
--- Please write an appropriate down migration for the SQL below:
--- GRANT USAGE ON SCHEMA hdb_catalog TO postgres;
--- GRANT ALL ON ALL TABLES IN SCHEMA hdb_catalog TO postgres;
--- GRANT ALL ON ALL SEQUENCES IN SCHEMA hdb_catalog TO postgres;
