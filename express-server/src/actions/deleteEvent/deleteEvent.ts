@@ -7,8 +7,8 @@ import { EventAttendee, EventInfo } from "../../models/eventTypes";
 import { ActionResult, deleteEventArgs } from "../../types";
 
 export async function deleteEventHandler(userId: string, eventId: string): Promise<ActionResult> {
-    // check if event exists
     try {
+        // if event owner does not exist or is not the owner, return error
         const attendee: EventAttendee = await getEventAttendee(eventId, userId)
         if (!attendee || attendee.status != EventAttendeeStatus.owner) {
             return {
@@ -17,6 +17,7 @@ export async function deleteEventHandler(userId: string, eventId: string): Promi
                 id: 'na'
             }
         }
+        // if event is already deleted, returne error
         const event: EventInfo = await getEvent(eventId)
         if (event.deleted == true) {
             return {
@@ -25,6 +26,7 @@ export async function deleteEventHandler(userId: string, eventId: string): Promi
                 id: 'na'
             }
         }
+        // delete event
         await client().request(deleteEventMutation, { eventId: parseInt(eventId) })
         return {
             status: ActionStatus.SUCCESS,

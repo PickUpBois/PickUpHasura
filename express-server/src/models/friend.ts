@@ -1,3 +1,7 @@
+/*
+Use case functions for anything related to handling precious relationships
+*/
+
 import { gql } from "graphql-request";
 import { FriendStatus } from "../enums";
 import client from "../gql_client";
@@ -30,6 +34,7 @@ const friendRequestQuery = gql`
     }
 `
 
+// checks if two users are actually friends
 export async function checkIsFriend(userId1: string, userId2: string): Promise<boolean> {
     try {
         const data = await client().request(friendStatusQuery, { userId1, userId2 })
@@ -42,6 +47,7 @@ export async function checkIsFriend(userId1: string, userId2: string): Promise<b
     }
 }
 
+// checks if a friend request has been sent from sender to sendee
 export async function checkFriendRequestExists(senderId: string, sendeeId: string): Promise<boolean> {
     try {
         const data = await client().request(friendRequestQuery, { senderId, sendeeId })

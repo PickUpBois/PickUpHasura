@@ -1,3 +1,7 @@
+/*
+Defines the entrypoint to the server
+*/
+
 import express from "express";
 import { initConfig } from './config';
 import actionsRouter from './actionRoutes';
@@ -33,6 +37,7 @@ startOpenEvents().then(() => {
     console.log(e)
 })
 
+// defines the resolvers for the graphql schema
 const resolvers = {
     Query: {
         getEventTeam: async (_, { teamId }) => {
@@ -42,8 +47,10 @@ const resolvers = {
     }
 }
 
+// constructs the schema
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
+// defines the graphql endpoint
 app.use('/graphql', graphqlHTTP({
     schema: schema,
     graphiql: true

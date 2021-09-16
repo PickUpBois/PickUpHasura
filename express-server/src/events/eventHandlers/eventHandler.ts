@@ -1,3 +1,7 @@
+/*
+Handler functions that respond to domain events that do not require notifications
+*/
+
 import { makeExecutableSchema } from 'graphql-tools';
 import {scheduledJobs, scheduleJob} from 'node-schedule';
 import { getAttendees, getEvent, getOpenEvents, setEventMvp } from '../../models/event';

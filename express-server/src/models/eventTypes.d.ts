@@ -1,3 +1,7 @@
+/*
+Model objects that hold the necessary properties of objects related to events
+*/
+
 import { EventAttendeeStatus, EventStatus, EventType } from "../enums";
 
 export type EventInfo = {

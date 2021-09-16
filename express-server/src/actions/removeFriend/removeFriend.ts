@@ -7,11 +7,10 @@ import { checkIsFriend } from "../../models/friend";
 import { ActionResult, removeFriendArgs } from "../../types";
 
 export async function removeFriendHandler(userId: string, friendId: string): Promise<ActionResult> {
-    // check if user is friends
-
-    // remove friend
     try {
+        // check if user is friends
         const status = await checkIsFriend(userId, friendId)
+        // remove friend
         if (!status) {
             return {
                 status: ActionStatus.ERROR,

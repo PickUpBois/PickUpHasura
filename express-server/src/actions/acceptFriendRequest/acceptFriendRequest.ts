@@ -6,10 +6,8 @@ import { checkFriendRequestExists } from "../../models/friend";
 import { acceptEventInvitationArgs, acceptFriendRequestArgs, ActionResult } from "../../types";
 
 export async function acceptFriendRequestHandler(userId: string, friendId: string): Promise<ActionResult> {
-    // check if friend request exists
-
-    // accept friend request
     try {
+        // check if friend request exists
         const exists = await checkFriendRequestExists(friendId, userId)
         if (!exists) {
             return {
@@ -18,6 +16,8 @@ export async function acceptFriendRequestHandler(userId: string, friendId: strin
                 id: 'na'
             }
         }
+
+        // accept friend request
         const variables = {
             senderId: friendId,
             sendeeId: userId,
@@ -54,6 +54,7 @@ const acceptFriendRequestMutation = gql`
     }
 `
 
+// controller for accepting friend requests
 export const acceptFriendRequestController = async (req: Request, res: Response) => {
     const userId: string = req.body.session_variables['x-hasura-user-id']
     const input: acceptFriendRequestArgs = req.body.input

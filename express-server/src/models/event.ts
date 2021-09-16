@@ -1,3 +1,7 @@
+/*
+Functions that implement the use cases required to handle events
+*/
+
 import { gql } from "graphql-request";
 import { EventAttendeeStatus } from "../enums";
 import client from "../gql_client";

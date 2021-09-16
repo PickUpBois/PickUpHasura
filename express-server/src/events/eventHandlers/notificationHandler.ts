@@ -1,3 +1,7 @@
+/*
+Handlers that send notifications in response to domain events
+*/
+
 import { gql } from "graphql-request";
 import { NotificationType } from "../../enums";
 import { client } from "../../gql_client";
@@ -12,6 +16,7 @@ const addNotificationMutation = gql`
     }
 `
 
+// adds a send friend request notification
 export async function addUserSentFriendRequestNotification(payload: UserSentFriendRequestPayload) {
     console.log(`adding notification ${NotificationType.friendRequestSend}`)
     const senderId = payload.senderId
@@ -29,7 +34,7 @@ export async function addUserSentFriendRequestNotification(payload: UserSentFrie
     }
 }
 
-// sends an accepted friend request notification to the user who accepted this friend request
+// sends an accepted friend request notification to the user who send this friend request
 export async function addUserAcceptedFriendRequestNotification(payload: UserAcceptFriendRequestPayload) {
     console.log(`adding notification ${NotificationType.friendRequestAccept}`)
     const senderId = payload.senderId
@@ -47,6 +52,7 @@ export async function addUserAcceptedFriendRequestNotification(payload: UserAcce
     }
 }
 
+// sends a rejected friend request notification to the user who rejected this friend request
 export async function addUserRejectedFriendRequestNotification(payload: UserRejectFriendRequestPayload) {
     console.log(`adding notification ${NotificationType.friendRequestReject}`)
     const senderId = payload.senderId
@@ -59,17 +65,19 @@ export async function addUserRejectedFriendRequestNotification(payload: UserReje
     }
     try {
         const data = await client.request(addNotificationMutation, variables)
+        console.log(data)
     } catch(e) {
         console.log(e)
     }
 
 }
 
+// sends a user joined event notification to the owner of the event
 export async function addUserJoinedEventNotification(payload: UserJoinedEventPayload) {
     console.log(`adding notification ${NotificationType.joinedEvent}`)
     const userId = payload.userId
     const eventId = payload.eventId
-    const ownerId = getEventOwnerId(eventId)
+    const ownerId = await getEventOwnerId(eventId)
     const variables = {
         userId: ownerId,
         type: NotificationType.joinedEvent,
@@ -78,16 +86,18 @@ export async function addUserJoinedEventNotification(payload: UserJoinedEventPay
     }
     try {
         const data = await client.request(addNotificationMutation, variables)
+        console.log(data)
     } catch(e) {
         console.log(e)
     }
 }
 
+// sends a user left event notification to the owner of the event
 export async function addUserLeftEventNotification(payload: UserLeftEventPayload) {
     console.log(`adding notification ${NotificationType.leftEvent}`)
     const userId = payload.userId
     const eventId = payload.eventId
-    const ownerId = getEventOwnerId(eventId)
+    const ownerId = await getEventOwnerId(eventId)
     const variables = {
         userId: ownerId,
         type: NotificationType.leftEvent,
@@ -101,11 +111,13 @@ export async function addUserLeftEventNotification(payload: UserLeftEventPayload
     }
 }
 
+// sends a event invitation to the user invited to the event
 export async function addUserInvitedToEventNotification(payload: UserInvitedToEventPayload) {
     console.log(`adding notification ${NotificationType.eventInvitation}`)
     const userId = payload.userId
     const eventId = payload.eventId
-    const ownerId = getEventOwnerId(eventId)
+    // gets the owner of the event
+    const ownerId = await getEventOwnerId(eventId)
     const variables = {
         userId: userId,
         type: NotificationType.eventInvitation,
@@ -119,6 +131,7 @@ export async function addUserInvitedToEventNotification(payload: UserInvitedToEv
     }
 }
 
+// sends a user selected mvp notification to the user who was selected the mvp of an event
 export async function addUserSelectedMvpNotification(payload: UserSelectedMvpPayload) {
     console.log(`adding notification ${NotificationType.selectedMvp}`)
     const userId = payload.userId
@@ -136,6 +149,7 @@ export async function addUserSelectedMvpNotification(payload: UserSelectedMvpPay
     }
 }
 
+// adds a finish event notification to the owner once an event has started
 export async function addFinishEventNotification(payload: EventStartedPayload) {
     console.log(`adding notification ${NotificationType.finishEvent}`)
     const eventId = payload.eventId
@@ -153,6 +167,7 @@ export async function addFinishEventNotification(payload: EventStartedPayload) {
     }
 }
 
+// adds a vote for mvp notification to all attendees of an event once the event has finished
 export async function addVoteForMvpNotification(payload: VoteForMvpPayload) {
     console.log(`adding notification ${NotificationType.voteForMvp}`)
     const eventId = payload.eventId
@@ -170,6 +185,7 @@ export async function addVoteForMvpNotification(payload: VoteForMvpPayload) {
     await Promise.all(tasks)
 }
 
+// adds a delete event notification
 export async function addDeleteEventNotification(payload: EventDeletedPayload) {
     // add deleteEvent as notification type
 

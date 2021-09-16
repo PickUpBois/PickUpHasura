@@ -5,10 +5,8 @@ import client from '../../gql_client'
 import { ActionResult, markNotificationAsReadArgs } from "../../types";
 
 export async function markNotificationAsReadHandler(userId: string, notificationId: string): Promise<ActionResult> {
-    // check if notification exists and is not already read
-
-    // mark notification as read
     try {
+        // mark notification as read
         const resp = await client().request(markNotificationAsReadMutation, { notificationId: parseInt(notificationId) })
         return {
             status: ActionStatus.SUCCESS,

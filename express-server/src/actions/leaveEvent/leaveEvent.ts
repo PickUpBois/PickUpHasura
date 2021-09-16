@@ -7,10 +7,8 @@ import { EventAttendee, EventInfo } from "../../models/eventTypes";
 import { ActionResult, leaveEventArgs } from "../../types";
 
 export async function leaveEventHandler(userId: string, eventId: string): Promise<ActionResult> {
-    // check if event exists
-
-    // check if user is not already in event
     try {
+        // check if event exists
         const event: EventInfo = await getEvent(eventId)
         if (!event) {
             return {
@@ -19,6 +17,8 @@ export async function leaveEventHandler(userId: string, eventId: string): Promis
                 id: null
             }
         }
+
+        // check if user is not already in event
         const attendee: EventAttendee = await getEventAttendee(eventId, userId)
         if (!attendee || attendee.status != EventAttendeeStatus.ok) {
             return {

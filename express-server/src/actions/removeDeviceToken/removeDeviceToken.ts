@@ -5,7 +5,7 @@ import client from "../../gql_client";
 import { ActionResult, removeDeviceTokenArgs } from "../../types";
 
 export async function removeDeviceTokenHandler(userId: string, token: string): Promise<ActionResult> {
-    // remove device token
+    // remove device token if it doesn't already exist
     try {
         const resp = await client().request(removeDeviceTokenMutation, { userId: userId, token: token })
         return {

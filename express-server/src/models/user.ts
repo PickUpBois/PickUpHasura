@@ -1,3 +1,7 @@
+/*
+Use case functions for anything related to users
+*/
+
 import { gql } from "graphql-request";
 import client from "../gql_client";
 import { UserInfo } from "./userTypes";
@@ -15,6 +19,7 @@ const getUserQuery = gql`
   }
 `
 
+// gets a user
 export async function getUser(userId: string): Promise<UserInfo | null> {
     try {
         const userData = await client().request(getUserQuery, { userId })

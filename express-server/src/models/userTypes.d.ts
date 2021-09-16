@@ -1,3 +1,7 @@
+/*
+Models for user data
+*/
+
 export type UserInfo = {
     id: string,
     firstName: string,

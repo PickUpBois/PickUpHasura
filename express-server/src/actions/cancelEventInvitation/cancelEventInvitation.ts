@@ -40,7 +40,7 @@ const removeEventInvitationMutation = gql`
         }
     }
 `
-
+// controller for cancelling event invitations
 export const cancelEventInvitationController = async (req: Request, res: Response) => {
     const params: cancelEventInvitationArgs = req.body.input;
     const userId: string = req.body.session_variables['x-hasura-user-id']

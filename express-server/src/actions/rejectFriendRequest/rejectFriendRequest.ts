@@ -6,10 +6,8 @@ import { checkFriendRequestExists } from "../../models/friend";
 import { ActionResult, rejectFriendRequestArgs } from "../../types";
 
 export async function rejectFriendRequestHandler(userId: string, friendId: string): Promise<ActionResult> {
-    // check if friend request exists
-
-    // reject friend request
     try {
+        // check if friend request exists
         const exists = await checkFriendRequestExists(friendId, userId)
         if (!exists) {
             return {
@@ -26,6 +24,7 @@ export async function rejectFriendRequestHandler(userId: string, friendId: strin
                 sendeeId: userId
             }
         }
+        // reject friend request
         const resp = await client.request(rejectFriendRequestMutation, variables)
         return {
             status: ActionStatus.SUCCESS,

@@ -7,12 +7,8 @@ import { EventAttendee, EventInfo } from "../../models/eventTypes";
 import { ActionResult, joinEventArgs } from "../../types";
 
 export async function joinEventHandler(userId: string, eventId: string): Promise<ActionResult> {
-    // check if event exists
-
-    // check if user is not already in event
-
-    // join event
     try {
+        // check if event exists
         const event: EventInfo = await getEvent(eventId)
         if (!event) {
             return {
@@ -21,6 +17,8 @@ export async function joinEventHandler(userId: string, eventId: string): Promise
                 id: null
             }
         }
+
+        // check if user is not already in event
         const attendee: EventAttendee = await getEventAttendee(eventId, userId)
         if (attendee && attendee.status == EventAttendeeStatus.ok) {
             return {
@@ -30,6 +28,7 @@ export async function joinEventHandler(userId: string, eventId: string): Promise
             }
         }
 
+        // join event
         const variables = {
             eventId: parseInt(eventId),
             userId: userId,

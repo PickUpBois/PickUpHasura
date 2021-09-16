@@ -8,12 +8,8 @@ import { UserInfo } from "../../models/userTypes";
 import { ActionResult, sendFriendRequestArgs } from "../../types";
 
 export async function sendFriendRequestHandler(userId: string, friendId: string): Promise<ActionResult> {
-    // check if user exists
-
-    // check if friend has not already sent a friend request
-
-    // send friend request
     try {
+        // check if user exists
         const friend: UserInfo = await getUser(friendId)
         if (!friend) {
             return {
@@ -22,6 +18,7 @@ export async function sendFriendRequestHandler(userId: string, friendId: string)
                 id: 'na'
             }
         }
+        // check if friend has not already sent a friend request
         const exists = await checkFriendRequestExists(friendId, userId)
         if (exists) {
             return {
@@ -38,6 +35,7 @@ export async function sendFriendRequestHandler(userId: string, friendId: string)
                 sendeeId: friendId
             }
         }
+        // send friend request
         const resp = await client.request(sendFriendRequestMutation, variables)
         return {
             status: ActionStatus.SUCCESS,

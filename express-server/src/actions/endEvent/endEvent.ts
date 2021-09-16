@@ -15,6 +15,7 @@ export async function endEventHandler(userId: string, input: EndEventInput): Pro
             id: 'na'
         }
     }
+    // if event owner does not exist or is not an owner, return error
     const attendee = await getEventAttendee(input.eventId, userId)
     if (!attendee || (attendee.status != EventAttendeeStatus.owner)) {
         return {
@@ -23,11 +24,13 @@ export async function endEventHandler(userId: string, input: EndEventInput): Pro
             id: 'na'
         }
     }
+    // convert array inputs to strings that are usable with postgres arrays
     const team1_members_string = `{${input.team1_members.toString()}}`
     const team2_members_string = `{${input.team2_members.toString()}}`
     const team1_scores_string = `{${input.team1_scores.toString()}}`
     const team2_scores_string = `{${input.team2_scores.toString()}}`
     try {
+        // end event
         const variables = {
             eventId: parseInt(input.eventId),
             team1_members: team1_members_string,

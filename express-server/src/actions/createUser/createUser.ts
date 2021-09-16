@@ -32,7 +32,7 @@ async function createUserHandler(userId: string, args: createUserArgs): Promise<
       userId
     }
   }
-  console.log(variables)
+  // create user
   try {
     const resp = await client().request(createUserMutation, variables);
     return {

@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { NotificationType } from "../enums";
 import client from "../gql_client";
 import * as admin from 'firebase-admin'
+import { removeDeviceTokenHandler } from "../actions/removeDeviceToken/removeDeviceToken";
 
 const getNotificationQuery = gql`
     query GetNotification($notificationId: Int!) {
@@ -88,7 +89,7 @@ export async function sendNotification(
           res.responses.forEach(async (resp, idx) => {
             if (!resp.success) {
               const token = devices[idx];
-              await this.notificationRepo.removeDeviceToken(userId, token);
+              await removeDeviceTokenHandler(userId, token);
             }
           });
         }

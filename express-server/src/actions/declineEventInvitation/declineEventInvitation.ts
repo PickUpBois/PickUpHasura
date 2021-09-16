@@ -7,15 +7,18 @@ import { EventAttendee } from "../../models/eventTypes";
 import { declineEventInvitationArgs } from "../../types";
 
 export async function declineEventInvitationHandler(userId: string, eventId: string) {
-    // check if event invitation exists
     try {
+        // check if event invitation exists
         const attendee: EventAttendee = await getEventAttendee(eventId, userId)
+
+        // if attendee does not exist or is not invited, return an error
         if (!attendee || attendee.status != EventAttendeeStatus.invited) {
             return {
                 status: ActionStatus.ERROR,
                 reason: 'invitation does not exist'
             }
         }
+        // decline event inivtation
         await client().request(removeEventInvitationMutation, { eventId: parseInt(eventId), userId })
         return {
             status: ActionStatus.SUCCESS,

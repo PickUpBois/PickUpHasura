@@ -6,10 +6,8 @@ import { getEventAttendee } from "../../models/event";
 import { ActionResult, voteForMvpArgs } from "../../types";
 
 export async function voteForMvpHandler(userId: string, voteeId: string, eventId: string): Promise<ActionResult> {
-    // check if votee is in event
-
-    // vote for mvp
     try {
+        // check if votee is in event
         const attendee = getEventAttendee(eventId, voteeId)
         if (!attendee) {
             return {
@@ -18,6 +16,7 @@ export async function voteForMvpHandler(userId: string, voteeId: string, eventId
                 id: 'na'
             }
         }
+        // vote for mvp
         const variables = {
             voterId: userId,
             voteeId: voteeId,

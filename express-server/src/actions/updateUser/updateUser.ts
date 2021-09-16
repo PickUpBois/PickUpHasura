@@ -25,6 +25,8 @@ const getUserQuery = gql`
   }
 `
 
+// merges the fields of the user input. The old input is the current user information. Any non null
+// fields in the new input will overwrite the corresponding field in the old input
 const mergeFields = (old: UpdateUserInput, curr: UpdateUserInput): UpdateUserInput => {
   return {
     firstName: curr.firstName || old.firstName,
@@ -38,9 +40,14 @@ const mergeFields = (old: UpdateUserInput, curr: UpdateUserInput): UpdateUserInp
 async function updateUserHandler(userId: string, args: updateUserArgs): Promise<ActionResult> {
     const updateUserInput: UpdateUserInput = args.arg1;
     try {
+      // get old user info
       const userData = await client.request(getUserQuery, { userId })
       const user: UpdateUserInput = userData.user
+
+      // get new user info by merging fields
       const newUser: UpdateUserInput = mergeFields(user, updateUserInput)
+
+      // update user
       const variables = {
         userId: userId,
         firstName: newUser.firstName,
@@ -58,7 +65,7 @@ async function updateUserHandler(userId: string, args: updateUserArgs): Promise<
     } catch(error) {
       return {
         status: ActionStatus.ERROR,
-        reason: error,
+        reason: JSON.stringify(error),
         id: 'na'
       }
     }

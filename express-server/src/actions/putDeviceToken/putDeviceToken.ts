@@ -5,7 +5,7 @@ import client from "../../gql_client";
 import { ActionResult, putDeviceTokenArgs } from "../../types";
 
 export async function putDeviceTokenHandler(userId: string, token: string): Promise<ActionResult> {
-    // put device token
+    // inserts a device token if it doesn't already exist, otherwise has no effect
     try {
         const resp = await client().request(putDeviceTokenMutation, { userId: userId, token: token })
         return {

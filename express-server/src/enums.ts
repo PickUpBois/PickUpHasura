@@ -1,3 +1,7 @@
+/*
+Defines all enums used by the postgres database
+*/
+
 export enum ActionStatus {
     SUCCESS = "SUCCESS",
     ERROR = "ERROR",

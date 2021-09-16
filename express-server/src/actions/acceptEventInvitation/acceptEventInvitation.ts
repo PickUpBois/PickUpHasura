@@ -8,17 +8,19 @@ import { acceptEventInvitationArgs, ActionResult } from "../../types";
 
 const acceptEventInvitationMutation = gql`
     mutation AcceptEventInvitation($eventId: Int!, $userId: String!) {
-        update_event_attendees_by_pk(pk_columns: {eventId: $eventId, id: $userId}, _set: {status: invited}) {
+        update_event_attendees_by_pk(pk_columns: {eventId: $eventId, id: $userId}, _set: {status: ok}) {
             id
         }
     }
 `
 
 export async function acceptEventInvitationHandler(userId: string, eventId: string): Promise<ActionResult> {
-    // check if event invitation exists
     try {
+        // check if event invitation exists
+
+        // if attendee does not exist or is not invited, return an error
         const attendee: EventAttendee = await getEventAttendee(eventId, userId);
-        if (attendee.status != EventAttendeeStatus.invited) {
+        if (!attendee || attendee.status != EventAttendeeStatus.invited) {
             return {
                 status: ActionStatus.ERROR,
                 reason: 'event invitation already exists',

@@ -9,18 +9,16 @@ import { UserInfo } from "../../models/userTypes";
 import { ActionResult, inviteUserToEventArgs } from "../../types";
 
 export async function inviteUserToEventHandler(ownerId: string, userId: string, eventId: string): Promise<ActionResult> {
-    // check if user exists
-
-    // check if event exists
-
-    // check if user has not already been invited
     try {
+        // check if user exists
         const user: UserInfo = await getUser(userId)
         if (!user) return {
             status: ActionStatus.ERROR,
             reason: 'invited user does not exist',
             id: 'na'
         }
+
+        // check if event exists
         const event: EventInfo = await getEvent(eventId)
         if (!event) {
             return {
@@ -29,6 +27,8 @@ export async function inviteUserToEventHandler(ownerId: string, userId: string, 
                 id: 'na'
             }
         }
+
+        // check if user has not already been invited or is already in event
         const attendee: EventAttendee = await getEventAttendee(eventId, userId)
         if (attendee) {
             return {
@@ -48,7 +48,6 @@ export async function inviteUserToEventHandler(ownerId: string, userId: string, 
                 userId: userId
             }
         }
-        console.log(variables)
         const resp = await client().request(inviteUserToEventMutation, variables)
         return {
             status: ActionStatus.SUCCESS,
