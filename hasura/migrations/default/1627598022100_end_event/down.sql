@@ -23,3 +23,4 @@
 --     DELETE FROM event_attendees AS a WHERE a.event_id = p_event_id AND a.status = 'invited';
 -- END;
 -- $function$;
+DROP FUNCTION IF EXISTS public.end_event;

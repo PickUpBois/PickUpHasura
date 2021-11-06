@@ -1,3 +1,4 @@
+CREATE EXTENSION postgis;
 SET check_function_bodies = false;
 CREATE TABLE public.events (
     event_id integer NOT NULL,
